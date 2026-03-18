@@ -10,13 +10,12 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    assetsDir: 'assets',
     rollupOptions: {
       output: {
-        manualChunks: {
-          three: ['three'],
-          rapier: ['@react-three/rapier'],
-          fiber: ['@react-three/fiber', '@react-three/drei'],
+        manualChunks(id) {
+          if (id.includes('node_modules/three')) return 'three'
+          if (id.includes('node_modules/@react-three/rapier')) return 'rapier'
+          if (id.includes('node_modules/@react-three')) return 'fiber'
         }
       }
     }
